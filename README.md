@@ -2,6 +2,8 @@
 
 [![NPM version](https://img.shields.io/npm/v/konan.svg?style=flat)](https://npmjs.com/package/konan) [![NPM downloads](https://img.shields.io/npm/dm/konan.svg?style=flat)](https://npmjs.com/package/konan) [![Build Status](https://img.shields.io/circleci/project/egoist/konan/master.svg?style=flat)](https://circleci.com/gh/egoist/konan) [![donate](https://img.shields.io/badge/$-donate-ff69b4.svg?maxAge=2592000&style=flat)](https://github.com/egoist/donate)
 
+> Like [detective](https://github.com/substack/node-detective) but also supports ES6 `import` and more.
+
 ## Install
 
 ```bash
