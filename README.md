@@ -6,7 +6,7 @@
 
 ```bash
 yarn add konan
-// or hey old school
+# or hey old school
 npm install --save konan
 ```
 
