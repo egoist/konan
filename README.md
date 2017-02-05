@@ -16,6 +16,7 @@ npm install --save konan
 - `import` ES6 import
 - `import()` [Dynamic import](https://github.com/tc39/proposal-dynamic-import)
 - You can use `jsx` and `flow` syntax in source content
+- Dynamic `require` is ignored
 
 ## Usage
 
