@@ -35,6 +35,13 @@ import('./my-async-module').then()
 
 ### konan(input, [options])
 
+#### input
+
+Type: `string`<br>
+Required: `true`
+
+Source content.
+
 #### options
 
 ##### dynamicImport
