@@ -17,7 +17,7 @@ npm install --save konan
 - `require` call
 - `import` ES6 import
 - `import()` [Dynamic import](https://github.com/tc39/proposal-dynamic-import)
-- You can use `jsx` and `flow` syntax in source content
+- You can use all language features supported by [babylon](https://github.com/babel/babylon), including `jsx` and `flow` syntax
 - Dynamic `require` is ignored
 
 ## Usage
