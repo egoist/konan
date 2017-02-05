@@ -22,4 +22,11 @@ describe('main', () => {
       'baby'
     ])
   })
+
+  test('ignore dynamical require', () => {
+    expect(konan(`
+      require(foo)
+      require('bar')
+    `)).toEqual(['bar'])
+  })
 })

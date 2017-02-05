@@ -27,14 +27,19 @@ module.exports = function (input, {
 
 function findModuleAfterImport(tokens, indexOfImport, {dynamicImport}) {
   const source = tokens.slice(indexOfImport + 1)
+  const isDynamicImport = source[0].type.label === '('
 
-  if (dynamicImport === false && source[0].type.label === '(') {
+  if (dynamicImport === false && isDynamicImport) {
     return []
   }
 
   for (const token of source) {
     if (token.type.label === 'string') {
       return token.value
+    }
+
+    if (isDynamicImport && token.type.label === ')') {
+      break
     }
   }
 
@@ -47,6 +52,10 @@ function findModuleAfterRequire(tokens, indexOfRequire) {
   for (const token of source) {
     if (token.type.label === 'string') {
       return token.value
+    }
+
+    if (token.type.label === ')') {
+      break
     }
   }
 

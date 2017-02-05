@@ -1,8 +1,7 @@
 const konan = require('./')
 
 const modules = konan(`
-import {foo} from 'foo'
-import   ('bar')
+import 'lol'
 `, {dynamicImport: false})
 
 console.log(modules)
