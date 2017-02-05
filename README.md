@@ -30,6 +30,19 @@ import('./my-async-module').then()
 //=> ['react', 'vue/dist/vue', './my-async-module']
 ```
 
+## API
+
+### konan(input, [options])
+
+#### options
+
+##### dynamicImport
+
+Type: `boolean`<br>
+Default: `true`
+
+You can disable detecting dynamic `import()`-ed modules.
+
 ## Contributing
 
 1. Fork it!

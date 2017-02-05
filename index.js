@@ -1,21 +1,23 @@
 const babylon = require('babylon')
 
-module.exports = function (input) {
+module.exports = function (input, {
+  dynamicImport = true
+} = {}) {
   if (typeof input !== 'string') {
     throw new Error('Expected input to be string')
   }
 
   const {tokens} = babylon.parse(input, {sourceType: 'module', plugins: '*'})
 
-  const modules = []
+  let modules = []
 
   tokens.forEach((token, index) => {
     if (token.type.label === 'import') {
-      modules.push(findModuleAfterImport(tokens, index))
+      modules = modules.concat(findModuleAfterImport(tokens, index, {dynamicImport}))
     }
     if (token.type.label === 'name') {
       if (token.value === 'require') {
-        modules.push(findModuleAfterImport(tokens, index))
+        modules = modules.concat(findModuleAfterRequire(tokens, index))
       }
     }
   })
@@ -23,8 +25,30 @@ module.exports = function (input) {
   return modules
 }
 
-function findModuleAfterImport(tokens, indexOfImport) {
-  return tokens.slice(indexOfImport).filter(token => {
-    return token.type.label === 'string'
-  })[0].value
+function findModuleAfterImport(tokens, indexOfImport, {dynamicImport}) {
+  const source = tokens.slice(indexOfImport + 1)
+
+  if (dynamicImport === false && source[0].type.label === '(') {
+    return []
+  }
+
+  for (const token of source) {
+    if (token.type.label === 'string') {
+      return token.value
+    }
+  }
+
+  return []
+}
+
+function findModuleAfterRequire(tokens, indexOfRequire) {
+  const source = tokens.slice(indexOfRequire + 1)
+
+  for (const token of source) {
+    if (token.type.label === 'string') {
+      return token.value
+    }
+  }
+
+  return []
 }
