@@ -53,6 +53,12 @@ Default: `true`
 
 You can disable detecting dynamic `import()`-ed modules.
 
+## FAQ
+
+### What does konan stand for?
+
+It stands for `Meitantei Konan` (名探偵コナン), the main character in [Detective Conan](https://en.wikipedia.org/wiki/Case_Closed).
+
 ## Contributing
 
 1. Fork it!
