@@ -1,6 +1,6 @@
 {
   "name": "konan",
-  "version": "0.0.0",
+  "version": "0.1.0",
   "description": "find all `require` `import` calls by walking the AST",
   "repository": {
     "url": "egoist/konan",
@@ -26,7 +26,9 @@
   "xo": {
     "space": 2,
     "semicolon": false,
-    "envs": ["jest"]
+    "envs": [
+      "jest"
+    ]
   },
   "dependencies": {
     "babylon": "^6.15.0"
