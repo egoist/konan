@@ -38,4 +38,9 @@ describe('main', () => {
       }
     `)).toEqual(['foo'])
   })
+
+  test('import *', () => {
+    expect(konan(`import * as m from 'm';var foo = {import: 'mm'}`))
+      .toEqual(['m'])
+  })
 })
