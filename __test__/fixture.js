@@ -14,4 +14,10 @@ const {
 
 import('./async-module')
 
+var a = {
+  import: 'foo1',
+  require: 'bar1',
+  lol: 'baz1'
+}
+
 const a = <div>jsx no-mad!</div>
