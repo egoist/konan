@@ -48,6 +48,11 @@ function findModuleAfterImport(tokens, indexOfImport, {dynamicImport}) {
 
 function findModuleAfterRequire(tokens, indexOfRequire) {
   const source = tokens.slice(indexOfRequire + 1)
+  const isRequireFunction = source[0].type.label === '('
+
+  if (!isRequireFunction) {
+    return []
+  }
 
   for (const token of source) {
     if (token.type.label === 'string') {

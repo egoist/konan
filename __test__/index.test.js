@@ -29,4 +29,13 @@ describe('main', () => {
       require('bar')
     `)).toEqual(['bar'])
   })
+
+  test('only consider require as function', () => {
+    expect(konan(`
+      require('foo')
+      var a = {
+        require: 'bar'
+      }
+    `)).toEqual(['foo'])
+  })
 })
