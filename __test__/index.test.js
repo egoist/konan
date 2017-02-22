@@ -5,29 +5,38 @@ describe('main', () => {
   const input = fs.readFileSync('./__test__/fixture.js', 'utf8')
 
   test('all', () => {
-    expect(konan(input)).toEqual([
-      'foo',
-      'vue/dist/vue',
-      'wow',
-      'baby',
-      './async-module'
-    ])
+    expect(konan(input)).toEqual({
+      strings: [
+        'foo',
+        'vue/dist/vue',
+        'wow',
+        'baby',
+        './async-module'
+      ],
+      expressions: []
+    })
   })
 
   test('exclude dynamical import', () => {
-    expect(konan(input, {dynamicImport: false})).toEqual([
-      'foo',
-      'vue/dist/vue',
-      'wow',
-      'baby'
-    ])
+    expect(konan(input, {dynamicImport: false})).toEqual({
+      strings: [
+        'foo',
+        'vue/dist/vue',
+        'wow',
+        'baby'
+      ],
+      expressions: []
+    })
   })
 
-  test('ignore dynamical require', () => {
+  test('dynamical require', () => {
     expect(konan(`
-      require(foo)
+      require(path.resolve('./'))
       require('bar')
-    `)).toEqual(['bar'])
+    `)).toEqual({
+      strings: ['bar'],
+      expressions: ['path.resolve(\'./\')']
+    })
   })
 
   test('only consider require as function', () => {
@@ -36,11 +45,17 @@ describe('main', () => {
       var a = {
         require: 'bar'
       }
-    `)).toEqual(['foo'])
+    `)).toEqual({
+      strings: ['foo'],
+      expressions: []
+    })
   })
 
   test('import *', () => {
     expect(konan(`import * as m from 'm';var foo = {import: 'mm'}`))
-      .toEqual(['m'])
+      .toEqual({
+        strings: ['m'],
+        expressions: []
+      })
   })
 })

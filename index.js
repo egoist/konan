@@ -1,68 +1,37 @@
 const babylon = require('babylon')
+const traverse = require('babel-traverse').default
 
-module.exports = function (input, {
-  dynamicImport = true
+module.exports = function (src, {
+  dynamicImport = true,
+  parse = {sourceType: 'module', plugins: '*'}
 } = {}) {
-  if (typeof input !== 'string') {
-    throw new Error('Expected input to be string')
+  const modules = {strings: [], expressions: []}
+  const moduleRe = /\b(require|import)\b/
+
+  if (!moduleRe.test(src)) {
+    return modules
   }
 
-  const {tokens} = babylon.parse(input, {sourceType: 'module', plugins: '*'})
+  const ast = babylon.parse(src, parse)
 
-  let modules = []
-
-  tokens.forEach((token, index) => {
-    if (token.type.label === 'import') {
-      modules = modules.concat(findModuleAfterImport(tokens, index, {dynamicImport}))
-    }
-    if (token.type.label === 'name') {
-      if (token.value === 'require') {
-        modules = modules.concat(findModuleAfterRequire(tokens, index))
+  traverse(ast, {
+    enter(path) {
+      if (path.node.type === 'CallExpression') {
+        const callee = path.get('callee')
+        const isDynamicImport = dynamicImport && callee.isImport()
+        if (callee.isIdentifier({name: 'require'}) || isDynamicImport) {
+          const arg = path.node.arguments[0]
+          if (arg.type === 'StringLiteral') {
+            modules.strings.push(arg.value)
+          } else {
+            modules.expressions.push(src.slice(arg.start, arg.end))
+          }
+        }
+      } else if (path.node.type === 'ImportDeclaration') {
+        modules.strings.push(path.node.source.value)
       }
     }
   })
 
   return modules
-}
-
-function findModuleAfterImport(tokens, indexOfImport, {dynamicImport}) {
-  const source = tokens.slice(indexOfImport + 1)
-  // import('module').then
-  const isDynamicImport = source[0].type.label === '('
-  // import 'module'
-  const isNormalImport = source[0].type.label === 'string'
-  // import {named} from 'module'
-  // import * as m from 'module'
-  // import m from 'module'
-  const isNamedImport = ['{', '*', 'name'].indexOf(source[0].type.label) > -1
-
-  if (isDynamicImport) {
-    if (dynamicImport === false) {
-      return []
-    }
-    if (source[1].type.label === 'string') {
-      return source[1].value
-    }
-  } else if (isNormalImport) {
-    return source[0].value
-  } else if (isNamedImport) {
-    for (const token of source) {
-      if (token.type.label === 'string') {
-        return token.value
-      }
-    }
-  }
-
-  return []
-}
-
-function findModuleAfterRequire(tokens, indexOfRequire) {
-  const source = tokens.slice(indexOfRequire + 1)
-  const isRequireFunction = source[0].type.label === '('
-
-  if (isRequireFunction && source[1].type.label === 'string') {
-    return source[1].value
-  }
-
-  return []
 }

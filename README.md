@@ -18,7 +18,6 @@ npm install --save konan
 - `import` ES6 import
 - `import()` [Dynamic import](https://github.com/tc39/proposal-dynamic-import)
 - You can use all language features supported by [babylon](https://github.com/babel/babylon), including `jsx` and `flow` syntax
-- Dynamic `require` is ignored
 
 ## Usage
 
@@ -29,8 +28,15 @@ konan(`
 import React, {Component} from 'react'
 const vue = require('vue/dist/vue')
 import('./my-async-module').then()
+require(path.resolve('./'))
 `)
-//=> ['react', 'vue/dist/vue', './my-async-module']
+/* 
+result =>
+{
+  strings: ['react', 'vue/dist/vue', './my-async-module'],
+  expressions: ['path.resolve(\'./\')']
+} 
+*/
 ```
 
 ## API
@@ -52,6 +58,13 @@ Type: `boolean`<br>
 Default: `true`
 
 You can disable detecting dynamic `import()`-ed modules.
+
+##### parse
+
+Type: `object`<br>
+Default: `{sourceType: 'module', plugins: '*'}`
+
+[babylon](https://github.com/babel/babylon) parse options.
 
 ## FAQ
 

@@ -3,13 +3,11 @@ import {foo} from 'foo'
 import hahah from 'vue/dist/vue'
 
 import {
-  a,
-  b,
-  c
+  hello
 } from 'wow'
 
 const {
-  hello
+  hello2
 } = require('baby')
 
 import('./async-module')
@@ -20,4 +18,4 @@ var a = {
   lol: 'baz1'
 }
 
-const a = <div>jsx no-mad!</div>
+const b = <div>jsx no-mad!</div>
