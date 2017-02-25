@@ -6,13 +6,20 @@ module.exports = function (src, {
   parse = {sourceType: 'module', plugins: '*'}
 } = {}) {
   const modules = {strings: [], expressions: []}
-  const moduleRe = /\b(require|import)\b/
 
-  if (!moduleRe.test(src)) {
-    return modules
+  let ast
+
+  if (typeof src === 'string') {
+    const moduleRe = /\b(require|import)\b/
+
+    if (!moduleRe.test(src)) {
+      return modules
+    }
+
+    ast = babylon.parse(src, parse)
+  } else {
+    ast = src
   }
-
-  const ast = babylon.parse(src, parse)
 
   traverse(ast, {
     enter(path) {

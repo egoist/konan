@@ -45,10 +45,10 @@ result =>
 
 #### input
 
-Type: `string`<br>
+Type: `string` `object`<br>
 Required: `true`
 
-Source content.
+Source content as string or AST tree.
 
 #### options
 
