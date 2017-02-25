@@ -2,7 +2,7 @@ const fs = require('fs')
 const konan = require('../')
 
 describe('main', () => {
-  const input = fs.readFileSync('./__test__/fixture.js', 'utf8')
+  const input = fs.readFileSync('./test/fixture.js', 'utf8')
 
   test('all', () => {
     expect(konan(input)).toEqual({
