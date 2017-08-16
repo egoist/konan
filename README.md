@@ -15,7 +15,7 @@ npm install --save konan
 ## Supported syntax
 
 - `require` call
-- `import` ES6 import
+- `import/export` ES6 modules
 - `import()` [Dynamic import](https://github.com/tc39/proposal-dynamic-import)
 - You can use all language features supported by [babylon](https://github.com/babel/babylon), including `jsx` and `flow` syntax
 
