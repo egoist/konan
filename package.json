@@ -1,6 +1,6 @@
 {
   "name": "konan",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "find all `require` `import` calls by walking the AST",
   "repository": {
     "url": "egoist/konan",
