@@ -5,3 +5,4 @@ export {
   MDCPersistentDrawerFoundation
 } from './persistent'
 export { util }
+export * from 'all'

@@ -54,7 +54,7 @@ describe('main', () => {
   test('export', () => {
     const input = fs.readFileSync('./test/fixture-export.js', 'utf8')
     expect(konan(input)).toEqual({
-      strings: ['./util', './temporary', './persistent'],
+      strings: ['./util', './temporary', './persistent', 'all'],
       expressions: []
     })
   })

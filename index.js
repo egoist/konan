@@ -36,7 +36,8 @@ module.exports = function(
         }
       } else if (
         path.node.type === 'ImportDeclaration' ||
-        path.node.type === 'ExportNamedDeclaration'
+        path.node.type === 'ExportNamedDeclaration' ||
+        path.node.type === 'ExportAllDeclaration'
       ) {
         const { source } = path.node
         if (source && source.value) {
