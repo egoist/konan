@@ -20,12 +20,16 @@ describe('main', () => {
   })
 
   test('all named imports', () => {
-    expect(konan(input2).imports).toEqual({
-      baz: ['foo', 'bar', 'qux'],
-      'vue/dist/vue': ['hahah'],
-      wow: ['hello'],
-      baby: ['hello2', 'hello3'],
-      './async-module': ['default']
+    expect(konan(input2)).toEqual({
+      expressions: [],
+      strings: ['baz', 'vue/dist/vue', 'wow', 'baby', './async-module'],
+      imports: {
+        baz: ['foo', 'bar', 'qux'],
+        'vue/dist/vue': ['hahah'],
+        wow: ['hello'],
+        baby: ['hello2', 'hello3'],
+        './async-module': ['default']
+      }
     })
   })
 
