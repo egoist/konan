@@ -49,10 +49,6 @@ module.exports = function(
 
   traverse(ast, {
     enter(path) {
-      // console.log(path.node);
-      // console.log(path.node.type);
-
-
       if (path.node.type === 'CallExpression') {
         const callee = path.get('callee')
         const isDynamicImport = dynamicImport && callee.isImport()
@@ -61,33 +57,42 @@ module.exports = function(
           if (arg.type === 'StringLiteral') {
             modules.strings.push(arg.value);
 
-            // console.log(prevPath.parentPath);
             if (Reflect.has(prevPath.parentPath, 'parentPath') && prevPath.parentPath.parentPath instanceof Object) {
-              const variableDeclarator = prevPath.parentPath.parentPath.parent;
-              const namedProps = variableDeclarator.id.properties.map(property => property.key.name);
-              if (!Reflect.has(modules.imports, arg.value)) {
-                modules.imports[arg.value] = [];
+              const ancestor = prevPath.parentPath.parentPath.parent;
+
+              if (ancestor.type === 'VariableDeclarator') {
+                const namedProps = ancestor.id.properties.map(property => property.key.name);
+                if (!Reflect.has(modules.imports, arg.value)) {
+                  modules.imports[arg.value] = [];
+                }
+                modules.imports[arg.value].push(...namedProps);
+                return
               }
-              modules.imports[arg.value].push(...namedProps);
-              return
+
+              if (ancestor.type === 'Program' && Reflect.has(prevPath.parent, 'id')) {
+                const variableDeclarator = prevPath;
+                console.log(variableDeclarator.parent.id.name);
+                const requireVariableName = variableDeclarator.parent.id.name;
+                if (!Reflect.has(modules.imports, arg.value)) {
+                  modules.imports[arg.value] = [];
+                }
+                modules.imports[arg.value].push(requireVariableName);
+                return;
+              }
             }
 
             if (Reflect.has(path.node, 'arguments') && path.node.arguments.length > 0 && path.node.arguments[0].type === 'StringLiteral') {
               modules.imports[arg.value] = ['default'];
             }
-
           } else {
             modules.expressions.push(src.slice(arg.start, arg.end))
           }
-          // storeNamedImports(path.node);
         }
       } else if (
         path.node.type === 'ImportDeclaration' ||
         path.node.type === 'ExportNamedDeclaration' ||
         path.node.type === 'ExportAllDeclaration'
         ) {
-          // console.log(path.node);
-
           const { source } = path.node
           if (source && source.value) {
             modules.strings.push(source.value)

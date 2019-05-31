@@ -4,6 +4,7 @@ const konan = require('../')
 describe('main', () => {
   const input = fs.readFileSync('./test/fixture.js', 'utf8')
   const input2 = fs.readFileSync('./test/fixture2.js', 'utf8')
+  const readmeExample = fs.readFileSync('./test/fixture-readme-example.js', 'utf8')
 
   test('all', () => {
     expect(konan(input).strings).toEqual(
@@ -60,6 +61,16 @@ describe('main', () => {
       strings: ['m'],
       expressions: [],
       imports: {m: ['m']}
+    })
+  })
+
+  test('README example', () => {
+    expect(konan(readmeExample).imports).toEqual({
+      react: [ 'React', 'Component' ],
+      'vue/dist/vue': [ 'vue' ],
+      'other/bin': [ 'other' ],
+      './my-async-module': [ 'default' ],
+      './my-async-module2': [ 'default' ]
     })
   })
 
