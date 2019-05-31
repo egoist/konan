@@ -25,7 +25,7 @@ npm install --save konan
 const konan = require('konan')
 
 konan(`
-import {React, Component} from 'react';
+import { React, Component } from 'react'
 const vue = require('vue/dist/vue')
 import('./my-async-module').then()
 require(path.resolve('./'))
