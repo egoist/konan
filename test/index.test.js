@@ -4,12 +4,19 @@ const konan = require('../')
 describe('main', () => {
   const input = fs.readFileSync('./test/fixture.js', 'utf8')
   const input2 = fs.readFileSync('./test/fixture2.js', 'utf8')
-  const readmeExample = fs.readFileSync('./test/fixture-readme-example.js', 'utf8')
+  const readmeExample = fs.readFileSync(
+    './test/fixture-readme-example.js',
+    'utf8'
+  )
 
   test('all', () => {
-    expect(konan(input).strings).toEqual(
-      ['foo', 'vue/dist/vue', 'wow', 'baby', './async-module']
-    )
+    expect(konan(input).strings).toEqual([
+      'foo',
+      'vue/dist/vue',
+      'wow',
+      'baby',
+      './async-module'
+    ])
   })
 
   test('all named imports', () => {
@@ -19,13 +26,16 @@ describe('main', () => {
       wow: ['hello'],
       baby: ['hello2', 'hello3'],
       './async-module': ['default']
-    });
+    })
   })
 
   test('exclude dynamical import', () => {
-    expect(konan(input, { dynamicImport: false }).strings).toEqual(
-      ['foo', 'vue/dist/vue', 'wow', 'baby'],
-    )
+    expect(konan(input, { dynamicImport: false }).strings).toEqual([
+      'foo',
+      'vue/dist/vue',
+      'wow',
+      'baby'
+    ])
   })
 
   test('dynamical require', () => {
@@ -37,7 +47,7 @@ describe('main', () => {
     ).toEqual({
       strings: ['bar'],
       expressions: ["path.resolve('./')"],
-      imports: {bar: ['default']}
+      imports: { bar: ['default'] }
     })
   })
 
@@ -52,7 +62,7 @@ describe('main', () => {
     ).toEqual({
       strings: ['foo'],
       expressions: [],
-      imports: {foo: ['default']}
+      imports: { foo: ['default'] }
     })
   })
 
@@ -60,17 +70,17 @@ describe('main', () => {
     expect(konan(`import * as m from 'm';var foo = {import: 'mm'}`)).toEqual({
       strings: ['m'],
       expressions: [],
-      imports: {m: ['m']}
+      imports: { m: ['m'] }
     })
   })
 
   test('README example', () => {
     expect(konan(readmeExample).imports).toEqual({
-      react: [ 'React', 'Component' ],
-      'vue/dist/vue': [ 'vue' ],
-      'other/bin': [ 'other' ],
-      './my-async-module': [ 'default' ],
-      './my-async-module2': [ 'default' ]
+      react: ['React', 'Component'],
+      'vue/dist/vue': ['vue'],
+      'other/bin': ['other'],
+      './my-async-module': ['default'],
+      './my-async-module2': ['default']
     })
   })
 
@@ -81,16 +91,11 @@ describe('main', () => {
       expressions: [],
       imports: {
         './persistent': [
-          "MDCPersistentDrawer",
-          "MDCPersistentDrawerFoundation"
+          'MDCPersistentDrawer',
+          'MDCPersistentDrawerFoundation'
         ],
-        './temporary': [
-          "MDCTemporaryDrawer",
-          "MDCTemporaryDrawerFoundation"
-        ],
-        './util': [
-          'util'
-        ]
+        './temporary': ['MDCTemporaryDrawer', 'MDCTemporaryDrawerFoundation'],
+        './util': ['util']
       }
     })
   })
