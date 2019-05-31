@@ -22,23 +22,13 @@ module.exports = function(
   }
 
   const storeNamedImports = node => {
-
-    // console.log(node);
-
     if (node.specifiers) {
-      // console.log('................');
-      // console.log(path.node)
       const imported = node.specifiers.map(specifier => specifier.imported || specifier.local);
       if (imported) {
-        // console.log(imported);
-
         const imports = imported.map(indentifier => indentifier && indentifier.name);
-        // console.log(imports);
-
         if (!Reflect.has(modules.imports, node.source.value)) {
           modules.imports[node.source.value] = [];
         }
-
         modules.imports[node.source.value] = imports;
       }
     }
