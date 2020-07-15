@@ -17,7 +17,7 @@ npm install --save konan
 - `require` call
 - `import/export` ES6 modules
 - `import()` [Dynamic import](https://github.com/tc39/proposal-dynamic-import)
-- You can use all language features supported by [babylon](https://github.com/babel/babylon), including `jsx` and `flow` syntax
+- You can use all language features supported by [babel parser](https://github.com/babel/babel/tree/master/packages/babel-parser), including `jsx` syntax by default
 
 ## Usage
 
@@ -30,12 +30,12 @@ const vue = require('vue/dist/vue')
 import('./my-async-module').then()
 require(path.resolve('./'))
 `)
-/* 
+/*
 result =>
 {
   strings: ['react', 'vue/dist/vue', './my-async-module'],
   expressions: ['path.resolve(\'./\')']
-} 
+}
 */
 ```
 
@@ -64,7 +64,7 @@ You can disable detecting dynamic `import()`-ed modules.
 Type: `object`<br>
 Default: `{sourceType: 'module', plugins: '*'}`
 
-[babylon](https://github.com/babel/babylon) parse options.
+[babel parser](https://github.com/babel/babel/tree/master/packages/babel-parser) parse [options](https://babeljs.io/docs/en/next/babel-parser.html#options).
 
 ## FAQ
 
