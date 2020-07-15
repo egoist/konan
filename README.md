@@ -62,7 +62,7 @@ You can disable detecting dynamic `import()`-ed modules.
 ##### parse
 
 Type: `object`<br>
-Default: `{sourceType: 'module', plugins: '*'}`
+Default: `{sourceType: 'module', plugins: ['jsx', 'typescript']}`
 
 [babel parser](https://github.com/babel/babel/tree/master/packages/babel-parser) parse [options](https://babeljs.io/docs/en/next/babel-parser.html#options).
 
