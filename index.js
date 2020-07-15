@@ -1,11 +1,14 @@
 const parser = require('@babel/parser')
 const traverse = require('@babel/traverse').default
 
-module.exports = function(
+module.exports = function (
   src,
   {
     dynamicImport = true,
-    parse = { sourceType: 'module', plugins: ['jsx', 'typescript', 'dynamicImport'] }
+    parse = {
+      sourceType: 'module',
+      plugins: ['jsx', 'typescript', 'dynamicImport'],
+    },
   } = {}
 ) {
   const modules = { strings: [], expressions: [] }
@@ -47,7 +50,7 @@ module.exports = function(
           modules.strings.push(source.value)
         }
       }
-    }
+    },
   })
 
   return modules
