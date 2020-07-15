@@ -9,9 +9,10 @@ jobs:
       - checkout
       - node/with-cache:
           steps:
+            - run: curl -L https://raw.githubusercontent.com/pnpm/self-installer/master/install.js | node
             - run: pnpm install
-            - run: npm test
-            - run: npx semantic-release
+            - run: pnpm test
+            - run: pnpx semantic-release
 workflows:
     build-and-test:
       jobs:
