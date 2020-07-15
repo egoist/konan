@@ -1,9 +1,12 @@
-const babylon = require('babylon')
-const traverse = require('babel-traverse').default
+const parser = require('@babel/parser')
+const traverse = require('@babel/traverse').default
 
 module.exports = function(
   src,
-  { dynamicImport = true, parse = { sourceType: 'module', plugins: '*' } } = {}
+  {
+    dynamicImport = true,
+    parse = { sourceType: 'module', plugins: ['jsx'] }
+  } = {}
 ) {
   const modules = { strings: [], expressions: [] }
 
@@ -16,7 +19,7 @@ module.exports = function(
       return modules
     }
 
-    ast = babylon.parse(src, parse)
+    ast = parser.parse(src, parse)
   } else {
     ast = src
   }

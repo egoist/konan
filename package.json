@@ -34,7 +34,7 @@
     ]
   },
   "dependencies": {
-    "babel-traverse": "^6.23.1",
-    "babylon": "^6.15.0"
+    "@babel/parser": "^7.10.5",
+    "@babel/traverse": "^7.10.5"
   }
 }
