@@ -19,3 +19,5 @@ var a = {
 }
 
 const b = <div>jsx no-mad!</div>
+
+const fragment = <></>
