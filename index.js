@@ -5,7 +5,7 @@ module.exports = function(
   src,
   {
     dynamicImport = true,
-    parse = { sourceType: 'module', plugins: ['jsx'] }
+    parse = { sourceType: 'module', plugins: ['jsx', 'typescript'] }
   } = {}
 ) {
   const modules = { strings: [], expressions: [] }
